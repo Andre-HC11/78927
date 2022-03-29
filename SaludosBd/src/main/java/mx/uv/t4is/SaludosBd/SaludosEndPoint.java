@@ -37,19 +37,12 @@ public class SaludosEndPoint {
         return respuesta;
     }   
 
-    @PayloadRoot(namespace = "https://t4is.uv.mx/saludos", localPart = "BuscarSaludoRequest")
+    @PayloadRoot(localPart = "BuscarSaludosRequest" ,namespace = "https://t4is.uv.mx/saludos")
     @ResponsePayload
-    public BuscarSaludosResponse buscar(){
-
+    public BuscarSaludosResponse buscarSaludos(){
         BuscarSaludosResponse respuesta = new BuscarSaludosResponse();
-        //implementar la solucion de la lista
-        /*for (Saludos s : lista){
-            respuesta.getSaludos().add(s);
-        }*/
-
-        for(Saludadores s: isaludadores)
-            isaludadores.findAll();
-
+        isaludadores.findAll();
+        respuesta.getSaludos();
         return respuesta;
     }
 
