@@ -21,6 +21,7 @@ public class SaludosEndPoint {
     //private int i = 1;
     @Autowired
     private Isaludadores isaludadores;
+    
 
     @PayloadRoot(namespace = "https://t4is.uv.mx/saludos", localPart = "SaludarRequest")
     @ResponsePayload
@@ -45,6 +46,10 @@ public class SaludosEndPoint {
         /*for (Saludos s : lista){
             respuesta.getSaludos().add(s);
         }*/
+
+        for(Saludadores s: isaludadores)
+            isaludadores.findAll();
+
         return respuesta;
     }
 
@@ -53,7 +58,7 @@ public class SaludosEndPoint {
     @ResponsePayload
     public ModificarSaludoResponse modificar(@RequestPayload ModificarSaludoRequest peticion){
         ModificarSaludoResponse respuesta = new ModificarSaludoResponse();
-        Saludos e = new Saludos();
+        Saludadores e = new Saludadores();
         e.setNombre(peticion.getNombre());
         e.setId(peticion.getId());
         //lista.set(peticion.getId() -1, e);
@@ -65,7 +70,13 @@ public class SaludosEndPoint {
     @ResponsePayload
     public BorrarSaludoResponse borrar(@RequestPayload ModificarSaludoRequest peticion){
         BorrarSaludoResponse respuesta = new BorrarSaludoResponse();
-        Saludos e = new Saludos();
+        Saludadores e = new Saludadores();
+
+        for(Saludadores s: isaludadores){
+            if(peticion.getId()==e.getId())
+                isaludadores.deleteById(peticion.getId());
+                break;
+        }
 
         /*for(Saludos s: lista){
             if (peticion.getId()==s.getId()){
