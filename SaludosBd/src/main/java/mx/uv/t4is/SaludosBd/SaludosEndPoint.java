@@ -1,7 +1,6 @@
 package mx.uv.t4is.SaludosBd;
 
-import java.util.ArrayList;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -18,19 +17,22 @@ import https.t4is_uv_mx.saludos.BuscarSaludosResponse.Saludos;
 @Endpoint
 public class SaludosEndPoint {
 
-    ArrayList<Saludos> lista = new ArrayList<>();
-    private int i = 1;
+    //ArrayList<Saludos> lista = new ArrayList<>();
+    //private int i = 1;
+    @Autowired
+    private Isaludadores isaludadores;
 
     @PayloadRoot(namespace = "https://t4is.uv.mx/saludos", localPart = "SaludarRequest")
     @ResponsePayload
-    public SaludarResponse saludar(@RequestPayload SaludarRequest nombre){
+    public SaludarResponse saludar(@RequestPayload SaludarRequest peticion){
 
         SaludarResponse respuesta = new SaludarResponse();
-        respuesta.setRespuesta("Hola "+ nombre.getNombre());
-        Saludos e = new Saludos();
-        e.setId(i++);
-        e.setNombre(nombre.getNombre());
-        lista.add(e);
+        respuesta.setRespuesta("Hola "+ peticion.getNombre());
+        //Agregar el saludo a una BD
+        Saludadores e = new Saludadores(); //Saludos e = new Saludos();
+        //e.setId(i++);
+        e.setNombre(peticion.getNombre());
+        isaludadores.save(e); //lista.add(e);
         return respuesta;
     }   
 
@@ -40,9 +42,9 @@ public class SaludosEndPoint {
 
         BuscarSaludosResponse respuesta = new BuscarSaludosResponse();
         //implementar la solucion de la lista
-        for (Saludos s : lista){
+        /*for (Saludos s : lista){
             respuesta.getSaludos().add(s);
-        }
+        }*/
         return respuesta;
     }
 
@@ -54,7 +56,7 @@ public class SaludosEndPoint {
         Saludos e = new Saludos();
         e.setNombre(peticion.getNombre());
         e.setId(peticion.getId());
-        lista.set(peticion.getId() -1, e);
+        //lista.set(peticion.getId() -1, e);
         respuesta.setRespuesta(true);
         return respuesta;
     }
@@ -65,11 +67,12 @@ public class SaludosEndPoint {
         BorrarSaludoResponse respuesta = new BorrarSaludoResponse();
         Saludos e = new Saludos();
 
-        for(Saludos s: lista){
+        /*for(Saludos s: lista){
             if (peticion.getId()==s.getId()){
                 lista.remove(lista.indexOf(e));
+                break;
             }
-        }
+        }*/
 
         respuesta.setRespuesta(true);
         return respuesta;
