@@ -64,7 +64,7 @@ public class SaludosEndPoint {
     public BorrarSaludoResponse borrar(@RequestPayload ModificarSaludoRequest peticion){
         BorrarSaludoResponse respuesta = new BorrarSaludoResponse();
         Saludadores e = new Saludadores();
-
+        
         for(Saludadores s: isaludadores){
             if(peticion.getId()==e.getId())
                 isaludadores.deleteById(peticion.getId());

@@ -68,6 +68,7 @@ public class SaludosEndPoint {
         for(Saludos s: lista){
             if (peticion.getId()==s.getId()){
                 lista.remove(lista.indexOf(e));
+                break;
             }
         }
 
